@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../screens/post_details_route.dart';
+import 'package:provider/provider.dart';
 
 String likeCount1;
 int likeCount2;
@@ -62,7 +63,8 @@ class LikeButtonState extends State<LikeButton> {
               .collection('/mainFeedPostDetails')
               .document(postId)
               .updateData({'likeCount': likeCount2.toString()});
-          pageKey.currentState.likeCount = likeCount2.toString();
+          //Provider.of<MainFeedPostDetailsPageState>(context, listen: false)
+          //  .likeCount;
         });
       },
       child: SvgPicture.asset(

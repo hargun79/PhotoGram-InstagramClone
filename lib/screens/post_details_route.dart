@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:socialmedia/ui/comment_row.dart';
 import 'package:socialmedia/ui/about_section.dart';
 import 'package:socialmedia/ui/like_bar.dart';
@@ -40,6 +41,7 @@ class _MainFeedPostDetailsRouteState extends State<MainFeedPostDetailsRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.lightBlueAccent,
           title: Text(
             "PhotoGram",
             style: TextStyle(fontWeight: FontWeight.w700),
@@ -88,6 +90,10 @@ class MainFeedPostDetailsPageState extends State<MainFeedPostDetailsPage> {
       postId,
       commentCount,
       likeCount;
+
+  String get likecount {
+    return likeCount;
+  }
 
   final _auth = FirebaseAuth.instance;
   @override

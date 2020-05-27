@@ -54,6 +54,7 @@ class _NewPostRouteState extends State<NewPostRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlueAccent,
         title: Text("Add New Post"),
       ),
       floatingActionButton: FloatingActionButton(

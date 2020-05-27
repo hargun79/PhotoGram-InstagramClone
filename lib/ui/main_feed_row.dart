@@ -26,7 +26,7 @@ class MainFeedRow extends StatelessWidget {
                           vertical: 14.0, horizontal: 12),
                       child: CircleAvatar(
                           backgroundImage: NetworkImage(_post.profilePicUri ??
-                              "https://www.indianhealthyrecipes.com/wp-content/uploads/2015/10/pizza-recipe-1-500x500.jpg")),
+                              "https://d2c7ipcroan06u.cloudfront.net/wp-content/uploads/2020/04/PM-Modi-speech-2.jpeg")),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +58,6 @@ class MainFeedRow extends StatelessWidget {
                       _post.title ?? 'title',
                       style: TextStyle(
                         fontSize: 22.0,
-                        fontWeight: FontWeight.w700,
                       ),
                       textAlign: TextAlign.start,
                     ),

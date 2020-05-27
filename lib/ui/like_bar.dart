@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'main_feed_row_like_button.dart';
+import 'package:provider/provider.dart';
 
 class LikeBar extends StatefulWidget {
   final String _likeCount;
@@ -29,6 +30,9 @@ class _LikeBarState extends State<LikeBar> {
                 width: 12.0,
               ),
               Text(widget._likeCount + " Likes"),
+              //Text(
+              //  '${Provider.of<MainFeedPostDetailsRoute>(context, listen: false).createState()}' +
+              //    " Likes")
             ],
           ),
         ),

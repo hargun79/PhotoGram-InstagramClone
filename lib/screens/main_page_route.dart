@@ -64,6 +64,7 @@ class MainPageScreenState extends State<MainPageScreen> {
           ],
         ),
         appBar: AppBar(
+          backgroundColor: Colors.lightBlueAccent,
           actions: <Widget>[
             PopupMenuButton(
               onSelected: (_) {
