@@ -18,7 +18,8 @@ class MainFeedScreen extends StatelessWidget {
         return ListView.builder(
           itemCount: snapshots.data.documents.length,
           itemBuilder: (context, index) => MainFeedRow(
-              MainFeedPost.fromSnapshot(snapshots.data.documents[index]), () {
+                  MainFeedPost.fromSnapshot(snapshots.data.documents[index]),
+                  () {
             Navigator.push(
                 context,
                 MaterialPageRoute(

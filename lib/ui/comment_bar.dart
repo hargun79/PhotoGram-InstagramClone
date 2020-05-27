@@ -173,8 +173,11 @@ class CommentsBarState extends State<CommentsBar> {
                 }
               }
               return Container(
+                height: commentCount2 > 2 ? 250 : 150,
+                margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
                 child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children: commentRows,
                 ),
