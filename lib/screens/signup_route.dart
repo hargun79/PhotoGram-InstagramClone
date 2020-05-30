@@ -21,29 +21,31 @@ class SignUpRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 100,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'PhotoGram',
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.w100),
-              ),
-              Icon(
-                Icons.photo_camera,
-                size: 40,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 100,
-          ),
-          SignUpScreen(_setLoggedIn)
-        ],
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.18,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'PhotoGram',
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.w100),
+                ),
+                Icon(
+                  Icons.photo_camera,
+                  size: 40,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.18,
+            ),
+            SignUpScreen(_setLoggedIn)
+          ],
+        ),
       ),
     );
   }
@@ -69,10 +71,17 @@ class SignUpScreenState extends State<SignUpScreen> {
       child: ListView(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 42.0),
+            padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
             color: Colors.white,
             child: Column(
               children: <Widget>[
+                Text(
+                  _nameFieldIsVisible ? "Sign Up" : "Sign In",
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w100),
+                ),
+                SizedBox(
+                  height: 24.0,
+                ),
                 TextField(
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -117,7 +126,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 24.0,
+                  height: _nameFieldIsVisible ? 24.0 : 0,
                 ),
                 Visibility(
                   visible: _nameFieldIsVisible ? true : false,
@@ -133,7 +142,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 24.0,
+                  height: _nameFieldIsVisible ? 24.0 : 0,
                 ),
                 Visibility(
                   visible: _nameFieldIsVisible ? true : false,
@@ -148,41 +157,51 @@ class SignUpScreenState extends State<SignUpScreen> {
                                 BorderRadius.all(Radius.circular(6.0)))),
                   ),
                 ),
-                FlatButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(18.0),
-                      side: BorderSide(color: Colors.blue)),
-                  child: Text(_nameFieldIsVisible ? "Sign Up" : "Sign In"),
-                  onPressed: () {
-                    _nameFieldIsVisible
-                        ? signUpWithEmail(
-                            nameController.text,
-                            emailController.text,
-                            passwordController.text,
-                            profileImageUrlController.text,
-                            descriptionController.text,
-                            widget._setLoggedIn)
-                        : signInWithEmail(
-                            nameController.text,
-                            emailController.text,
-                            passwordController.text,
-                            widget._setLoggedIn);
-                    Timer(Duration(seconds: 3), () {
-                      nameController.clear();
-                      passwordController.clear();
-                      emailController.clear();
-                      profileImageUrlController.clear();
-                      descriptionController.clear();
-                    });
-                  },
-                ),
                 SizedBox(
-                  height: 32.0,
+                  height: _nameFieldIsVisible ? 24.0 : 0,
+                ),
+                FlatButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(18.0),
+                        side: BorderSide(color: Colors.blue)),
+                    child: Text(_nameFieldIsVisible ? "Sign Up" : "Sign In"),
+                    onPressed: () {
+                      _nameFieldIsVisible
+                          ? signUpWithEmail(
+                              nameController.text,
+                              emailController.text,
+                              passwordController.text,
+                              profileImageUrlController.text,
+                              descriptionController.text,
+                              widget._setLoggedIn)
+                          : signInWithEmail(
+                              nameController.text,
+                              emailController.text,
+                              passwordController.text,
+                              widget._setLoggedIn);
+                      FocusScope.of(context).unfocus();
+                      Timer(Duration(seconds: 3), () {
+                        nameController.clear();
+                        passwordController.clear();
+                        emailController.clear();
+                        profileImageUrlController.clear();
+                        descriptionController.clear();
+                        _displaySnackBar(BuildContext context) {
+                          final snackBar =
+                              SnackBar(content: Text('Something went wrong!'));
+                          _scaffoldKey.currentState.showSnackBar(snackBar);
+                        }
+
+                        _displaySnackBar(context);
+                      });
+                    }),
+                SizedBox(
+                  height: 24.0,
                 ),
                 FlatButton(
                   child: Text(_nameFieldIsVisible == true
                       ? "Already have an account? Sign in"
-                      : "Dont have an account? Sign up"),
+                      : "Don't have an account? Sign up"),
                   onPressed: () {
                     setState(() {
                       _nameFieldIsVisible = !_nameFieldIsVisible;
@@ -195,10 +214,5 @@ class SignUpScreenState extends State<SignUpScreen> {
         ],
       ),
     );
-  }
-
-  _displaySnackBar(BuildContext context) {
-    final snackBar = SnackBar(content: Text('$errorMessage'));
-    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 }

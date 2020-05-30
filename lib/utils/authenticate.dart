@@ -17,7 +17,7 @@ Future<bool> isLoggedIn() async {
   return _user != null;
 }
 
-Future<bool> signUpWithEmail(String name, String email, String password,
+Future<dynamic> signUpWithEmail(String name, String email, String password,
     String profileImageUrl, String description, Function setLoggedIn) async {
   bool success = false;
   try {

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../screens/post_details_route.dart';
 import 'package:provider/provider.dart';
+import 'like_bar.dart';
 
 String likeCount1;
 int likeCount2;
@@ -11,7 +12,7 @@ final pageKey = GlobalKey<MainFeedPostDetailsPageState>();
 
 class LikeButton extends StatefulWidget {
   final String postId;
-  final String likeCount;
+  String likeCount;
   LikeButton(this.postId, this.likeCount);
   @override
   State<StatefulWidget> createState() {

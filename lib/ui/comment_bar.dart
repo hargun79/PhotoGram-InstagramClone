@@ -29,7 +29,7 @@ void getCurrentUser() async {
 }
 
 class CommentsBar extends StatefulWidget {
-  final String _commentCount;
+  String _commentCount;
   final String _id;
 
   CommentsBar(this._id, this._commentCount);
@@ -113,6 +113,7 @@ class CommentsBarState extends State<CommentsBar> {
                         .updateData({'commentCount': commentCount2.toString()});
                     FocusScope.of(context).unfocus();
                     _controller.clear();
+                    widget._commentCount = commentCount2.toString();
                   });
                 },
               ),
