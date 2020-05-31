@@ -3,6 +3,7 @@ import 'package:socialmedia/utils/authenticate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:socialmedia/utils/constants.dart';
 
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
@@ -86,12 +87,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                      hintText: "Email Address",
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: Colors.black12),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(6.0)))),
+                      hintText: "Email Address", border: kBorderDecoration),
                 ),
                 SizedBox(
                   height: 24.0,
@@ -101,12 +97,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                   controller: passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
-                      hintText: "Password",
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 1, color: Colors.black12),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(6.0)))),
+                      hintText: "Password", border: kBorderDecoration),
                 ),
                 SizedBox(
                   height: 24.0,
@@ -117,12 +108,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                     controller: nameController,
                     textCapitalization: TextCapitalization.words,
                     decoration: InputDecoration(
-                        hintText: "Username",
-                        border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black12),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(6.0)))),
+                        hintText: "Username", border: kBorderDecoration),
                   ),
                 ),
                 SizedBox(
@@ -134,11 +120,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                     controller: profileImageUrlController,
                     decoration: InputDecoration(
                         hintText: "Profile Image Url",
-                        border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black12),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(6.0)))),
+                        border: kBorderDecoration),
                   ),
                 ),
                 SizedBox(
@@ -149,12 +131,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                   child: TextField(
                     controller: descriptionController,
                     decoration: InputDecoration(
-                        hintText: "Description",
-                        border: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.black12),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(6.0)))),
+                        hintText: "Status", border: kBorderDecoration),
                   ),
                 ),
                 SizedBox(

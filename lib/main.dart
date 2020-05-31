@@ -1,7 +1,6 @@
 import 'package:provider/provider.dart';
 import 'package:socialmedia/screens/signup_route.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmedia/ui/like_bar.dart';
 import 'screens/main_page_route.dart';
 import 'utils/authenticate.dart' as auth;
 
