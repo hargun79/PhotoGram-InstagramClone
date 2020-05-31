@@ -47,7 +47,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           padding: EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text(
                 'Username',
@@ -105,7 +105,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               FlatButton(
                 child: Text('Submit'),
-                color: Colors.lightBlueAccent,
                 shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(18.0),
                     side: BorderSide(color: Colors.blue)),

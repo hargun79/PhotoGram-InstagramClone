@@ -7,6 +7,7 @@ import 'package:socialmedia/ui/like_bar.dart';
 import 'package:socialmedia/ui/comment_bar.dart';
 
 FirebaseUser loggedInUser;
+String postCount;
 
 class MainFeedPostDetailsRoute extends StatefulWidget {
   final String _id;
@@ -91,7 +92,14 @@ class MainFeedPostDetailsPageState extends State<MainFeedPostDetailsPage> {
   void initState() {
     super.initState();
     getCurrentUser();
-    heroImageHeight = widget.screenWidth / 1.3;
+    heroImageHeight = 400;
+    Firestore.instance
+        .collection("users")
+        .document(loggedInUser.uid)
+        .get()
+        .then((document) {
+      postCount = document["postCount"];
+    });
     Firestore.instance
         .collection("mainFeedPostDetails")
         .document(widget._id)
@@ -159,6 +167,30 @@ class MainFeedPostDetailsPageState extends State<MainFeedPostDetailsPage> {
                           SizedBox(
                             width: 5,
                           ),
+                          Visibility(
+                            visible: loggedInUser.uid == userId ? true : false,
+                            child: FlatButton(
+                              onPressed: () {
+                                String postCount1 = postCount;
+                                int postCount2 = int.parse(postCount1);
+                                postCount2 -= 1;
+                                postCount1 = postCount2.toString();
+                                Firestore.instance
+                                    .collection('/users')
+                                    .document(loggedInUser.uid)
+                                    .updateData({'postCount': postCount1});
+                                Firestore.instance
+                                    .collection("mainFeedPostDetails")
+                                    .document(widget._id)
+                                    .delete();
+                                Navigator.pop(context);
+                              },
+                              child: Text('Delete Post'),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(18.0),
+                                  side: BorderSide(color: Colors.red)),
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -175,11 +207,14 @@ class MainFeedPostDetailsPageState extends State<MainFeedPostDetailsPage> {
               ),
               username == null
                   ? SizedBox.shrink()
-                  : AboutSection(
-                      username,
-                      profilePicUri ??
-                          'https://d2c7ipcroan06u.cloudfront.net/wp-content/uploads/2020/04/PM-Modi-speech-2.jpeg',
-                      userDescription),
+                  : Visibility(
+                      visible: loggedInUser.uid != userId,
+                      child: AboutSection(
+                          username,
+                          profilePicUri ??
+                              'https://d2c7ipcroan06u.cloudfront.net/wp-content/uploads/2020/04/PM-Modi-speech-2.jpeg',
+                          userDescription),
+                    ),
             ],
           ),
         ),
