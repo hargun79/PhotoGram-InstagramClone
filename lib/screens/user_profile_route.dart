@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../utils/authenticate.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'main_feed_screen.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -10,13 +10,10 @@ class UserProfileScreen extends StatefulWidget {
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
   String name, source;
-  FirebaseUser loggedInUser;
-  final _auth = FirebaseAuth.instance;
   final _firestore = Firestore.instance;
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
     Firestore.instance
         .collection("mainFeedPostDetails")
         .document(uid)
@@ -29,18 +26,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         }
       });
     });
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loggedInUser = user;
-        print(loggedInUser.email);
-      }
-    } catch (e) {
-      print(e);
-    }
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/main_feed_screen.dart';
 import '../screens/user_profile_route.dart';
+import 'edit_profile_route.dart';
 
 class MainPageRoute extends StatelessWidget {
   @override
@@ -36,6 +37,25 @@ class MainPageScreenState extends State<MainPageScreen> {
     },
   ];
 
+  void handleClick(String value) {
+    switch (value) {
+      case 'Edit Profile':
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EditProfileScreen()),
+        );
+        break;
+      case 'Sign out':
+        FirebaseAuth.instance.signOut();
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SplashScreen()),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,24 +87,14 @@ class MainPageScreenState extends State<MainPageScreen> {
           backgroundColor: Colors.lightBlueAccent,
           actions: <Widget>[
             PopupMenuButton(
-              onSelected: (_) {
-                FirebaseAuth.instance.signOut();
-                Navigator.pop(context);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SplashScreen()),
-                );
-              },
-              itemBuilder: (_) {
-                return [
-                  PopupMenuItem(
-                    value: "Sign Out",
-                    child: Text(
-                      "Sign Out",
-                      style: TextStyle(fontFamily: "Roboto"),
-                    ),
-                  )
-                ];
+              onSelected: handleClick,
+              itemBuilder: (BuildContext context) {
+                return {"Edit Profile", "Sign out"}.map((String choice) {
+                  return PopupMenuItem<String>(
+                    value: choice,
+                    child: Text(choice),
+                  );
+                }).toList();
               },
             )
           ],

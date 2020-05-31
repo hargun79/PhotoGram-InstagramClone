@@ -165,7 +165,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                         descriptionController.clear();
                         _displaySnackBar(BuildContext context) {
                           final snackBar =
-                              SnackBar(content: Text('Something went wrong!'));
+                              SnackBar(content: Text("Something went wrong!"));
                           _scaffoldKey.currentState.showSnackBar(snackBar);
                         }
 
