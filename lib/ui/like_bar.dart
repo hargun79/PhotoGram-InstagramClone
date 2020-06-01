@@ -3,7 +3,7 @@ import 'main_feed_row_like_button.dart';
 import 'package:provider/provider.dart';
 
 class LikeBar extends StatefulWidget {
-  final String _likeCount;
+  String _likeCount;
   final String _postId;
 
   LikeBar(this._likeCount, this._postId);

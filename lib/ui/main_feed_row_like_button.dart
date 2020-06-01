@@ -63,8 +63,7 @@ class LikeButtonState extends State<LikeButton> {
               .collection('/mainFeedPostDetails')
               .document(postId)
               .updateData({'likeCount': likeCount2.toString()});
-          //Provider.of<MainFeedPostDetailsPageState>(context, listen: false)
-          //  .likeCount;
+          widget.likeCount = likeCount2.toString();
         });
       },
       child: SvgPicture.asset(
