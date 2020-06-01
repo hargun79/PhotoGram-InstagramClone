@@ -35,7 +35,10 @@ class _MainFeedScreenState extends State<MainFeedScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collection("mainFeedPostDetails").snapshots(),
+      stream: Firestore.instance
+          .collection("mainFeedPostDetails")
+          .orderBy("time", descending: true)
+          .snapshots(),
       builder: (context, snapshots) {
         if (!snapshots.hasData)
           return Padding(
