@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:socialmedia/utils/main_feed_post.dart';
-import '../ui/main_feed_row.dart';
-import '../screens//post_details_route.dart';
+import 'package:socialmedia/ui/main_feed_row.dart';
+import 'package:socialmedia/screens/post_details_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 FirebaseUser loggedInUser;

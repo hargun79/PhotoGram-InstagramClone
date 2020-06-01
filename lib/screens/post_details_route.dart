@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
 import 'package:socialmedia/ui/about_section.dart';
 import 'package:socialmedia/ui/like_bar.dart';
 import 'package:socialmedia/ui/comment_bar.dart';
+import 'main_feed_screen.dart';
 
-FirebaseUser loggedInUser;
 String postCount;
 
 class MainFeedPostDetailsRoute extends StatefulWidget {
@@ -87,19 +85,10 @@ class MainFeedPostDetailsPageState extends State<MainFeedPostDetailsPage> {
     return likeCount;
   }
 
-  final _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
     heroImageHeight = 400;
-    Firestore.instance
-        .collection("users")
-        .document(loggedInUser.uid)
-        .get()
-        .then((document) {
-      postCount = document["postCount"];
-    });
     Firestore.instance
         .collection("mainFeedPostDetails")
         .document(widget._id)
@@ -121,18 +110,13 @@ class MainFeedPostDetailsPageState extends State<MainFeedPostDetailsPage> {
         });
       }
     });
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser();
-      if (user != null) {
-        loggedInUser = user;
-        print(loggedInUser.email);
-      }
-    } catch (e) {
-      print(e);
-    }
+    Firestore.instance
+        .collection("users")
+        .document(loggedInUser.uid)
+        .get()
+        .then((document) {
+      postCount = document["postCount"];
+    });
   }
 
   @override

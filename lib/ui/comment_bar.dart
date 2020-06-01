@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'comment_row.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:socialmedia/screens/main_feed_screen.dart';
 
 String comment;
 String commentCount1;
@@ -10,23 +10,7 @@ String profileImageUrl;
 
 bool _showComments = false;
 
-FirebaseUser loggedInUser;
-
-final _auth = FirebaseAuth.instance;
-
 final TextEditingController _controller = new TextEditingController();
-
-void getCurrentUser() async {
-  try {
-    final user = await _auth.currentUser();
-    if (user != null) {
-      loggedInUser = user;
-      print(loggedInUser.email);
-    }
-  } catch (e) {
-    print(e);
-  }
-}
 
 class CommentsBar extends StatefulWidget {
   String _commentCount;
@@ -54,7 +38,6 @@ class CommentsBarState extends State<CommentsBar> {
       commentCount2 = int.parse(commentCount1);
       print(commentCount2);
     });
-    getCurrentUser();
     super.initState();
   }
 
