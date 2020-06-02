@@ -71,6 +71,8 @@ class NewPostScreen extends StatefulWidget {
 }
 
 class NewPostScreenState extends State<NewPostScreen> {
+  bool _validate1 = false;
+  bool _validate2 = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -83,6 +85,7 @@ class NewPostScreenState extends State<NewPostScreen> {
             controller: titleController,
             decoration: InputDecoration(
               hintText: "Caption",
+              errorText: _validate1 ? 'Value Can\'t Be Empty' : null,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               border: OutlineInputBorder(
@@ -107,6 +110,7 @@ class NewPostScreenState extends State<NewPostScreen> {
           TextField(
             controller: urlController,
             decoration: InputDecoration(
+              errorText: _validate2 ? 'Value Can\'t Be Empty' : null,
               hintText: "Post URL",
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -132,31 +136,44 @@ class NewPostScreenState extends State<NewPostScreen> {
           FloatingActionButton(
             child: Icon(Icons.check),
             onPressed: () {
-              _firestore
-                  .collection('/mainFeedPosts')
-                  .add({'name': title, 'heroImageUrl': url});
-              _firestore.collection('/mainFeedPostDetails').add({
-                'name': title,
-                'heroImageUrl': url,
-                'status': "Status",
-                'username': loggedInUser.displayName,
-                'profilePicUrl': profilePicUri,
-                'commentCount': '0',
-                'likeCount': '0',
-                'userId': loggedInUser.uid,
-                'userDescription': userDescription,
-                'time': DateTime.now()
+              setState(() {
+                if (titleController.text.isEmpty == true ||
+                    urlController.text.isEmpty == true) {
+                  titleController.text.isEmpty
+                      ? _validate1 = true
+                      : _validate1 = false;
+                  urlController.text.isEmpty
+                      ? _validate2 = true
+                      : _validate2 = false;
+                  return;
+                } else {
+                  _firestore
+                      .collection('/mainFeedPosts')
+                      .add({'name': title, 'heroImageUrl': url});
+                  _firestore.collection('/mainFeedPostDetails').add({
+                    'name': title,
+                    'heroImageUrl': url,
+                    'status': "Status",
+                    'username': loggedInUser.displayName,
+                    'profilePicUrl': profilePicUri,
+                    'commentCount': '0',
+                    'likeCount': '0',
+                    'userId': loggedInUser.uid,
+                    'userDescription': userDescription,
+                    'time': DateTime.now()
+                  });
+                  postCount2 += 1;
+                  //postCount2.toString();
+                  _firestore
+                      .collection('/users')
+                      .document(loggedInUser.uid)
+                      .updateData({'postCount': postCount2.toString()});
+                  FocusScope.of(context).unfocus();
+                  titleController.clear();
+                  urlController.clear();
+                  Navigator.pop(context);
+                }
               });
-              postCount2 += 1;
-              //postCount2.toString();
-              _firestore
-                  .collection('/users')
-                  .document(loggedInUser.uid)
-                  .updateData({'postCount': postCount2.toString()});
-              FocusScope.of(context).unfocus();
-              titleController.clear();
-              urlController.clear();
-              Navigator.pop(context);
             },
           ),
         ],

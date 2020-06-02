@@ -65,6 +65,13 @@ class SignUpScreen extends StatefulWidget {
 
 class SignUpScreenState extends State<SignUpScreen> {
   bool _nameFieldIsVisible = false;
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,11 +100,26 @@ class SignUpScreenState extends State<SignUpScreen> {
                   height: 24.0,
                 ),
                 TextField(
-                  obscureText: true,
+                  obscureText: _obscureText,
                   controller: passwordController,
                   keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
-                      hintText: "Password", border: kBorderDecoration),
+                    hintText: "Password",
+                    border: kBorderDecoration,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        !_obscureText ? Icons.visibility : Icons.visibility_off,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 24.0,
