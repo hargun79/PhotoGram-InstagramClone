@@ -34,7 +34,7 @@ class MainFeedRow extends StatelessWidget {
                         Text(_post.username ?? 'Hargun',
                             style: TextStyle(
                                 fontSize: 16.0, fontWeight: FontWeight.w600)),
-                        Text(_post.time.toString(),
+                        Text(_post.time.toString().substring(0, 16),
                             style: TextStyle(
                               fontSize: 14.0,
                               color: Colors.black54,

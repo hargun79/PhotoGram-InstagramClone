@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../screens/post_details_route.dart';
-import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 String likeCount1;
 int likeCount2;
@@ -11,7 +11,7 @@ final pageKey = GlobalKey<MainFeedPostDetailsPageState>();
 
 class LikeButton extends StatefulWidget {
   final String postId;
-  String likeCount;
+  final String likeCount;
   LikeButton(this.postId, this.likeCount);
   @override
   State<StatefulWidget> createState() {
@@ -63,8 +63,12 @@ class LikeButtonState extends State<LikeButton> {
               .collection('/mainFeedPostDetails')
               .document(postId)
               .updateData({'likeCount': likeCount2.toString()});
-          widget.likeCount = likeCount2.toString();
         });
+        Fluttertoast.showToast(
+            msg: "Added a Like",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1);
       },
       child: SvgPicture.asset(
         src,

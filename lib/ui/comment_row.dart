@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class CommentRow extends StatelessWidget {
   final String _userId, _username, _profilePicUrl, _body;
-  final DateTime _date;
+  String _date;
 
   CommentRow(this._userId, this._username, this._profilePicUrl, this._body,
       this._date);
 
-  DateTime get date {
+  String get date {
     return _date;
   }
 
@@ -30,7 +30,7 @@ class CommentRow extends StatelessWidget {
                   children: <Widget>[
                     Text(_username,
                         style: TextStyle(fontWeight: FontWeight.w600)),
-                    Text(_date.toString()),
+                    Text(_date),
                   ],
                 ),
               )
@@ -38,7 +38,13 @@ class CommentRow extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
-            child: Text(_body),
+            child: Text(
+              _body,
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: "Poppins-Regular.ttf",
+                  fontWeight: FontWeight.w300),
+            ),
           ),
         ],
       ),

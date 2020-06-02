@@ -187,7 +187,7 @@ class MainFeedPostDetailsPageState extends State<MainFeedPostDetailsPage> {
                   : CommentsBar(widget._id, commentCount),
               Container(
                 height: 52.0,
-                color: Colors.black12,
+                color: Colors.white,
               ),
               username == null
                   ? SizedBox.shrink()
@@ -199,6 +199,10 @@ class MainFeedPostDetailsPageState extends State<MainFeedPostDetailsPage> {
                               'https://d2c7ipcroan06u.cloudfront.net/wp-content/uploads/2020/04/PM-Modi-speech-2.jpeg',
                           userDescription),
                     ),
+              Container(
+                height: 52.0,
+                color: Colors.white,
+              ),
             ],
           ),
         ),

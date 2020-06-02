@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'comment_row.dart';
 import 'package:socialmedia/screens/main_feed_screen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 String comment;
 String commentCount1;
@@ -97,6 +99,11 @@ class CommentsBarState extends State<CommentsBar> {
                     FocusScope.of(context).unfocus();
                     _controller.clear();
                     widget._commentCount = commentCount2.toString();
+                    Fluttertoast.showToast(
+                        msg: "Comment Added",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1);
                   });
                 },
               ),
@@ -120,7 +127,7 @@ class CommentsBarState extends State<CommentsBar> {
                       border: Border.all(color: Colors.blueAccent),
                     ),
                     child: Text(
-                      widget._commentCount + " comments",
+                      " Comments",
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
                   ),
@@ -149,8 +156,10 @@ class CommentsBarState extends State<CommentsBar> {
                 final profilePicUrl = comment.data['userProfilePicUrl'];
                 final body = comment.data['body'];
                 final dateTime = comment.data['dateTime'].toDate();
+                String formattedDate =
+                    DateFormat('dd-MM-yyyy – kk:mm').format(dateTime);
                 final commentRow = new CommentRow(
-                    userId, username, profilePicUrl, body, dateTime);
+                    userId, username, profilePicUrl, body, formattedDate);
                 if (widget._id == comment.data['postId']) {
                   commentRows.add(commentRow);
                   commentRows.sort((a, b) => b.date.compareTo(a.date));

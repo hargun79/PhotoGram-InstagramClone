@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'main_feed_row_like_button.dart';
-import 'package:provider/provider.dart';
 
 class LikeBar extends StatefulWidget {
-  String _likeCount;
+  final String _likeCount;
   final String _postId;
 
   LikeBar(this._likeCount, this._postId);
@@ -18,23 +17,20 @@ class _LikeBarState extends State<LikeBar> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Card(
-        elevation: 20,
+        elevation: 50,
         margin: EdgeInsets.only(bottom: 0.0),
         child: Container(
-          padding: EdgeInsets.all(16.0),
-          color: Colors.white,
-          child: Row(
-            children: <Widget>[
-              LikeButton(widget._postId, widget._likeCount),
-              SizedBox(
-                width: 12.0,
-              ),
-              Text(widget._likeCount + " Likes"),
-              //Text(
-              //  '${Provider.of<MainFeedPostDetailsRoute>(context, listen: false).createState()}' +
-              //    " Likes")
-            ],
-          ),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+              color: Colors.white70,
+              blurRadius: 50.0,
+            ),
+          ]),
+          width: MediaQuery.of(context).size.width * 0.4,
+          padding: EdgeInsets.all(10.0),
+          margin: EdgeInsets.only(left: 30.0, right: 30.0),
+          //color: Colors.white,
+          child: LikeButton(widget._postId, widget._likeCount),
         ),
       ),
     );
