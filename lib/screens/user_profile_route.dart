@@ -20,7 +20,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: _firestore.collection("mainFeedPostDetails").snapshots(),
+        stream: _firestore
+            .collection("mainFeedPostDetails")
+            .orderBy("time", descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(

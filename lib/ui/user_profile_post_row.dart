@@ -14,8 +14,7 @@ class UserProfilePostRow extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Expanded(
-                child: Image.network(_src,
-                    width: double.infinity, fit: BoxFit.cover),
+                child: Image.network(_src, width: double.infinity, height: 200),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

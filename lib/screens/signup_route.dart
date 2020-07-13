@@ -1,9 +1,14 @@
+import 'dart:io';
 import 'dart:async';
 import 'package:socialmedia/utils/authenticate.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socialmedia/utils/constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as Path;
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
@@ -66,7 +71,9 @@ class SignUpScreen extends StatefulWidget {
 class SignUpScreenState extends State<SignUpScreen> {
   bool _nameFieldIsVisible = false;
   bool _obscureText = true;
-
+  File _image;
+  String _uploadedFileURL;
+  bool showSpinner = false;
   void _toggle() {
     setState(() {
       _obscureText = !_obscureText;
@@ -141,8 +148,19 @@ class SignUpScreenState extends State<SignUpScreen> {
                   child: TextField(
                     controller: profileImageUrlController,
                     decoration: InputDecoration(
-                        hintText: "Profile Image Url",
+                        hintText: "Profile Image Url(Generated automatically)",
                         border: kBorderDecoration),
+                  ),
+                ),
+                SizedBox(
+                  height: _nameFieldIsVisible ? 24.0 : 0,
+                ),
+                Visibility(
+                  visible: _nameFieldIsVisible ? true : false,
+                  child: RaisedButton(
+                    child: Text('Choose File'),
+                    onPressed: chooseFile,
+                    color: Colors.lightBlueAccent,
                   ),
                 ),
                 SizedBox(
@@ -213,5 +231,28 @@ class SignUpScreenState extends State<SignUpScreen> {
         ],
       ),
     );
+  }
+
+  Future chooseFile() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(pickedFile.path);
+      showSpinner = true;
+    });
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('chats/${Path.basename(_image.path)}}');
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((fileURL) {
+      setState(() {
+        _uploadedFileURL = fileURL;
+        profileImageUrlController.text = _uploadedFileURL;
+        print(_uploadedFileURL);
+        showSpinner = false;
+      });
+    });
   }
 }
